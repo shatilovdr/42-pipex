@@ -6,17 +6,17 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:25:06 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/27 19:58:56 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/28 22:47:37 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	env_initialize(t_px *px, char **envp);
+void	paths_initialize(t_px *px, char **envp);
 // void	pipes_initialize(t_px *px, int num);
 // void	cmds_initialize(t_px *px, int num);
 
-t_px	*px_initialize(int argc, char **argv, char **envp)
+t_px	*px_initialize(int argc, char **envp)
 {
 	t_px	*px;
 
@@ -26,16 +26,15 @@ t_px	*px_initialize(int argc, char **argv, char **envp)
 		ft_putendl_fd("Can't allocate memory for t_px *", 2);
 		exit(EXIT_FAILURE);
 	}
-	env_initialize(px, envp);
+	paths_initialize(px, envp);
 	// pipes_initialize(px, argc - 4);
 	// cmds_initialize(px, argc - 3);
-	px->in_flie = argv[0];
-	px->out_file = argv[argc - 1];
-	px->pids = ft_calloc(10, sizeof(pid_t));
+	(void)argc;
+	px->pids = ft_calloc(100, sizeof(pid_t));
 	return (px);
 }
 
-void	env_initialize(t_px *px, char **envp)
+void	paths_initialize(t_px *px, char **envp)
 {
 	int		i;
 	char	*path;

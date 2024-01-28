@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:17:24 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/27 20:34:54 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/28 22:49:20 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	main(int argc, char **argv, char **envp)
 		// exit(1);
 		argc = 5;
 	}
-	px = px_initialize(argc, argv, envp);
+	px = px_initialize(argc, envp);
 	// parse_args(px, argc - 3, argv + 2);
 	px->cmds = cmds;
-	status = execute_commands(px, argc - 3);
+	status = execute_commands(px, argc - 3, argv[0], argv[argc - 1]);
 	wait(NULL);
 	wait(NULL);
 	// free_px(px);

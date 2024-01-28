@@ -6,7 +6,7 @@ NAME			:=	pipex
 # DRAWER_PATH		:= ./srcs/drawer/
 # DRAWER			:= $(addprefix $(DRAWER_PATH), $(DRAWER_NAME))
 
-SRCS_NAME		:=	main.c px_initialize.c execute_commands.c open_files.c check_access.c
+SRCS_NAME		:=	main.c px_initialize.c execute_commands.c open_files.c check_access.c execution_failures.c
 SRCS_PATH		:=	./srcs/
 SRCS			:=	$(addprefix $(SRCS_PATH), $(SRCS_NAME))
 

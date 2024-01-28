@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:11 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/28 20:45:31 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/28 22:47:56 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,21 @@
 
 typedef struct s_px
 {
-	char	*in_flie;
-	char	*out_file;
 	char	**paths;
-	int		pipes[2][2];
 	char	***cmds;
 	char	**envp;
 	pid_t	*pids;
-	int		status;
+
 }	t_px;
 
-t_px	*px_initialize(int argc, char **argv, char **envp);
-int		execute_commands(t_px *px, int num);
+t_px	*px_initialize(int argc, char **envp);
+int		execute_commands(t_px *px, int num, char *infile, char *outfile);
 int		open_input_file(char *location);
 int		open_output_file(char *location);
 int		check_access(char *location, int mode);
 
-
+int		fork_failure(int fd_read_prev, int fd_read, int fd_write);
+void	chld_close_failure(int fd_read_prev, int fd_write);
+int		pipe_failure(int fd_read_prev);
 
 #endif
