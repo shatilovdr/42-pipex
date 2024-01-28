@@ -1,0 +1,9 @@
+lib/libft/*/*.o
+lib/libft/*/*.a
+lib/libft/libft.a
+*.out
+.DS_Store
+*.pdf
+.vscode
+pipex.dSYM/
+pipex
