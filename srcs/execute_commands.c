@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/28 23:17:25 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:10:04 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	execute_commands(t_px *px, int num, char *infile, char *outfile)
 		close(pipes[num % 2][READ]);
 		return (OPEN_FAILURE);
 	}
-	return (execute_last(px, num, out_fd, pipes));
+	status = execute_last(px, num, out_fd, pipes);
+	if (status)
+		return (status);
+	status = wait_childs(px, num);
+	return (status);
 }
 
 int	execute_first(t_px *px, int in_fd, int pipes[2][2])
@@ -51,10 +55,16 @@ int	execute_first(t_px *px, int in_fd, int pipes[2][2])
 	px->pids[0] = fork();
 	if (px->pids[0] == -1)
 		return (fork_failure(in_fd, pipes[0][READ], pipes[0][WRITE]));
+	if (px->pids[0] == CHILD && in_fd < 0)
+	{
+		close(pipes[0][READ]);
+		close(pipes[0][WRITE]);
+		exit(FD_FAILURE);
+	}
 	if (px->pids[0] == CHILD && close(pipes[0][READ] != 0))
 		chld_close_failure(in_fd, pipes[0][WRITE]);
 	status = execute_command(px, 0, in_fd, pipes[0][WRITE]);
-	if (close(in_fd) != 0)
+	if (in_fd > 0 && close(in_fd) != 0)
 		return (CLOSE_FAILURE);
 	return (status);
 }
@@ -97,9 +107,15 @@ int	execute_last(t_px *px, int num, int out_fd, int pipes[2][2])
 	px->pids[num - 1] = fork();
 	if (px->pids[num - 1] == -1)
 	{
-		close(out_fd);
+		if (out_fd > 0)
+			close(out_fd);
 		close(pipes[last][READ]);
 		return (FORK_FAILURE);
+	}
+	if (px->pids[num - 1] == CHILD && out_fd < 0)
+	{
+		close(pipes[last][READ]);
+		exit(FD_FAILURE);
 	}
 	status = execute_command(px, num - 1, pipes[last][READ], out_fd);
 	if (close(pipes[last][READ]) != 0)
@@ -109,8 +125,11 @@ int	execute_last(t_px *px, int num, int out_fd, int pipes[2][2])
 
 int	execute_command(t_px *px, int i, int in, int out)
 {
+	char	**cmd;
+
 	if (px->pids[i] == CHILD)
 	{
+		get_cmd(&cmd, i);
 		if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
 		{
 			if (close(in) != 0)
@@ -122,13 +141,11 @@ int	execute_command(t_px *px, int i, int in, int out)
 				exit(CLOSE_FAILURE);
 			execve(px->cmds[i][0], px->cmds[i], px->envp);
 		}
-		close(in);
-		close(out);
-		exit(1);
+		execve_failure(px, in, out, cmd);
 	}
 	else
 	{
-		if (close(out) != 0)
+		if (out > 0 && close(out) != 0)
 			return (CLOSE_FAILURE);
 	}
 	return (0);

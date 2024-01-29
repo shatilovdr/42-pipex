@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 23:10:58 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/27 18:27:04 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:41:56 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	check_file_access(char *filename, int path_status, int mode);
 * mode values: 0 - read, 1 - write
 * Return values:
 * 0 - access to directory/file and rights are granted
-* 1 - no such file or directory
-* 2 - permission denied
+* NSFD - no such file or directory
+* PD - permission denied
 */
 int	check_access(char *location, int mode)
 {
@@ -41,7 +41,7 @@ int	check_access(char *location, int mode)
 				return (check_file_access(location, 0, mode));
 			ft_putstr_fd("zsh: read-only file system: ", 2);
 			ft_putendl_fd(location, 2);
-			return (2);
+			return (PD);
 		}
 		filename = path_end + 1;
 		if (filename == NULL)
@@ -67,16 +67,16 @@ int	check_directory_and_file(char *path, char *path_end, int mode)
 * int	check_directory_access(char *path, int mode)
 * Return values:
 * 0 - access to directory and rights are granted
-* 1 - no such file or directory
-* 2 - permission denied
+* NSFD - no such file or directory
+* PD - permission denied
 */
 int	check_directory_access(char *path, int mode)
 {
 	if (access(path, F_OK) != 0)
-		return (1);
+		return (NSFD);
 	else if ((mode == 0 && access(path, R_OK) != 0)
 		|| (mode == 1 && access(path, W_OK) != 0))
-		return (2);
+		return (PD);
 	return (0);
 }
 
@@ -84,8 +84,8 @@ int	check_directory_access(char *path, int mode)
 * int	check_file_access(char *filename, int path_status, int mode)
 * Return values:
 * 0 - access to file and rights are granted
-* 1 - no such file or directory
-* 2 - permission denied
+* NSFD - no such file or directory
+* PD - permission denied
 */
 int	check_file_access(char *filename, int path_status, int mode)
 {
@@ -101,16 +101,16 @@ int	check_file_access(char *filename, int path_status, int mode)
 		{
 			ft_putstr_fd("zsh: permission denied: ", 2);
 			ft_putendl_fd(filename, 2);
-			return (2);
+			return (PD);
 		}
 	}
 	if (path_status == 2)
 	{
 		ft_putstr_fd("zsh: permission denied: ", 2);
 		ft_putendl_fd(filename, 2);
-		return (2);
+		return (PD);
 	}
 	ft_putstr_fd("zsh: no such file or directory: ", 2);
 	ft_putendl_fd(filename, 2);
-	return (1);
+	return (NSFD);
 }
