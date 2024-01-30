@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/29 19:10:04 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/30 13:32:15 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	execute_first(t_px *px, int in_fd, int pipes[2][2])
 		exit(FD_FAILURE);
 	}
 	if (px->pids[0] == CHILD && close(pipes[0][READ] != 0))
-		chld_close_failure(in_fd, pipes[0][WRITE]);
+		child_failure(px, in_fd, pipes[0][WRITE], NULL);
 	status = execute_command(px, 0, in_fd, pipes[0][WRITE]);
 	if (in_fd > 0 && close(in_fd) != 0)
 		return (CLOSE_FAILURE);
@@ -89,7 +89,7 @@ int	execute_middle(t_px *px, int num, int pipes[2][2])
 			return (fork_failure(pipes[prev][READ], pipes[curr][READ],
 				pipes[curr][WRITE]));
 		if (px->pids[i] == CHILD && close(pipes[curr][READ] != 0))
-			chld_close_failure(pipes[prev][READ], pipes[curr][WRITE]);
+			child_failure(px, pipes[prev][READ], pipes[curr][WRITE], NULL);
 		status = execute_command(px, i, pipes[prev][READ], pipes[curr][WRITE]);
 		if (close(pipes[prev][READ]) != 0)
 			return (CLOSE_FAILURE);
@@ -129,19 +129,19 @@ int	execute_command(t_px *px, int i, int in, int out)
 
 	if (px->pids[i] == CHILD)
 	{
-		get_cmd(&cmd, i);
-		if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
+		if (find_cmd(px, i, &cmd) == true)
 		{
-			if (close(in) != 0)
+			if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
 			{
-				close(out);
-				exit(CLOSE_FAILURE);
+				if (close(in) != 0)
+					child_failure(px, -1, out, cmd);
+				if (close(out) != 0)
+					child_failure(px, -1, -1, cmd);
+				execve(cmd[0], cmd, px->envp);
+				child_failure(px, -1, -1, cmd);
 			}
-			if (close(out) != 0)
-				exit(CLOSE_FAILURE);
-			execve(px->cmds[i][0], px->cmds[i], px->envp);
 		}
-		execve_failure(px, in, out, cmd);
+		child_failure(px, in, out, cmd);
 	}
 	else
 	{

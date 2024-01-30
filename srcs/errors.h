@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:56:32 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/29 19:01:27 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/30 10:16:03 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 #  define FD_FAILURE -6
 # endif
 
-# ifndef EXECVE_FAILURE
-#  define EXECVE_FAILURE -7
+# ifndef CHILD_FAILURE
+#  define CHILD_FAILURE -7
 # endif
 
 #endif
