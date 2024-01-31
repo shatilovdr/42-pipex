@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/30 13:32:15 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:43:31 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	execute_command(t_px *px, int i, int in, int out)
 
 	if (px->pids[i] == CHILD)
 	{
-		if (find_cmd(px, i, &cmd) == true)
+		if (get_command(px, i, &cmd) == true)
 		{
 			if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
 			{

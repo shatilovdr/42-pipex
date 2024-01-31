@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:11 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/30 13:25:41 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:27:14 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ int		execute_commands(t_px *px, int num, char *infile, char *outfile);
 int		open_input_file(char *location);
 int		open_output_file(char *location);
 int		check_access(char *location, int mode);
-t_bool	find_cmd(t_px *px, int i, char ***cmd);
+t_bool	get_command(t_px *px, int i, char ***cmd);
 void	free_px(t_px *px);
 int		wait_childs(t_px *px, int num);
 int		fork_failure(int fd_read_prev, int fd_read, int fd_write);
 int		pipe_failure(int fd_read_prev);
 void	child_failure(t_px *px, int in, int out, char **cmd);
+char	*find_executable(char *command, char **paths);
 
 #endif

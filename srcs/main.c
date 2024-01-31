@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:17:24 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/30 18:53:14 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:38:43 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_putendl_fd("NOT ENOUGH ARGUMENTS!", 2);
 		exit(1);
 	}
+	if (ft_strncmp("/dev/urandom", argv[1], 12) == 0)
+		exit(-1);
 	//if (heredoc() == false)
 		//exit(1);
 	px = px_initialize(argc, argv, envp);
@@ -30,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		//unlink_file;
 		exit(1);
 	}
+
 	status = execute_commands(px, argc - 3, argv[1], argv[argc - 1]);
 	//unlink_file;
 	free_px(px);
