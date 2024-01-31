@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:25:06 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/30 14:30:34 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/31 23:01:44 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_bool	paths_initialize(t_px *px, char **envp);
 t_bool	cmds_initialize(t_px *px, int argc, char **argv);
 
-t_px	*px_initialize(int argc, char **argv, char **envp)
+t_px	*px_initialize(int argc, char **argv, char **envp, t_bool here_doc)
 {
 	t_px	*px;
 
@@ -35,6 +35,7 @@ t_px	*px_initialize(int argc, char **argv, char **envp)
 		free_px(px);
 		return (NULL);
 	}
+	(void)here_doc;
 	return (px);
 }
 

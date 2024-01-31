@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait_childs.c                                      :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 12:20:23 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/31 22:33:20 by dshatilo         ###   ########.fr       */
+/*   Created: 2024/01/31 22:45:53 by dshatilo          #+#    #+#             */
+/*   Updated: 2024/01/31 23:07:32 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	wait_childs(t_px *px, int num)
+t_bool	ft_heredoc(int *argc, char ***argv)
 {
-	int	i;
-	int	status;
-
-	i = 0;
-	while (i < num)
-	{
-		waitpid(px->pids[i], &status, 0);
-		i++;
-	}
-	return (status);
+	(void)argc;
+	(void)argv;
+	return(true);
 }

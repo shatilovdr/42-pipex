@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/31 17:43:31 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/01/31 22:31:14 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execute_first(t_px *px, int in_fd, int pipes[2][2])
 		close(pipes[0][WRITE]);
 		exit(FD_FAILURE);
 	}
-	if (px->pids[0] == CHILD && close(pipes[0][READ] != 0))
+	if (px->pids[0] == CHILD && close(pipes[0][READ]) != 0)
 		child_failure(px, in_fd, pipes[0][WRITE], NULL);
 	status = execute_command(px, 0, in_fd, pipes[0][WRITE]);
 	if (in_fd > 0 && close(in_fd) != 0)
