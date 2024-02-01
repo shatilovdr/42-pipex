@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:20:23 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/31 22:33:20 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:25:51 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@ int	wait_childs(t_px *px, int num)
 		waitpid(px->pids[i], &status, 0);
 		i++;
 	}
-	return (status);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (EXIT_FAILURE);
 }
