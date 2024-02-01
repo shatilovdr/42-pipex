@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:11 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/31 23:07:39 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/02 00:03:24 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_px
 	char	**envp;
 }	t_px;
 
+t_bool	check_inputs(int argc, char **argv, t_bool *here_doc);
 t_px	*px_initialize(int argc, char **argv, char **envp, t_bool here_doc);
 int		execute_commands(t_px *px, int num, char *infile, char *outfile);
 int		open_input_file(char *location);
