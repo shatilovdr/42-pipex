@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/31 22:31:14 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:47:09 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	execute_commands(t_px *px, int num, char *infile, char *outfile)
 	status = execute_middle(px, num, pipes);
 	if (status)
 		return (status);
-	out_fd = open_output_file(outfile);
+	out_fd = open_output_file(outfile, px->here_doc);
 	if (out_fd == OPEN_FAILURE)
 	{
 		close(pipes[num % 2][READ]);
@@ -62,7 +62,7 @@ int	execute_first(t_px *px, int in_fd, int pipes[2][2])
 		exit(FD_FAILURE);
 	}
 	if (px->pids[0] == CHILD && close(pipes[0][READ]) != 0)
-		child_failure(px, in_fd, pipes[0][WRITE], NULL);
+		chld_fd_cls_fail(px, in_fd, pipes[0][WRITE], NULL);
 	status = execute_command(px, 0, in_fd, pipes[0][WRITE]);
 	if (in_fd > 0 && close(in_fd) != 0)
 		return (CLOSE_FAILURE);
@@ -89,7 +89,7 @@ int	execute_middle(t_px *px, int num, int pipes[2][2])
 			return (fork_failure(pipes[prev][READ], pipes[curr][READ],
 				pipes[curr][WRITE]));
 		if (px->pids[i] == CHILD && close(pipes[curr][READ] != 0))
-			child_failure(px, pipes[prev][READ], pipes[curr][WRITE], NULL);
+			chld_fd_cls_fail(px, pipes[prev][READ], pipes[curr][WRITE], NULL);
 		status = execute_command(px, i, pipes[prev][READ], pipes[curr][WRITE]);
 		if (close(pipes[prev][READ]) != 0)
 			return (CLOSE_FAILURE);
@@ -126,27 +126,28 @@ int	execute_last(t_px *px, int num, int out_fd, int pipes[2][2])
 int	execute_command(t_px *px, int i, int in, int out)
 {
 	char	**cmd;
+	int		child_status;
 
 	if (px->pids[i] == CHILD)
 	{
-		if (get_command(px, i, &cmd) == true)
+		child_status = get_command(px, i, &cmd);
+		if (child_status != 0)
 		{
-			if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
-			{
-				if (close(in) != 0)
-					child_failure(px, -1, out, cmd);
-				if (close(out) != 0)
-					child_failure(px, -1, -1, cmd);
-				execve(cmd[0], cmd, px->envp);
-				child_failure(px, -1, -1, cmd);
-			}
+			close(in);
+			close(out);
+			return (child_status);
 		}
-		child_failure(px, in, out, cmd);
+		if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
+		{
+			if (close(in) != 0)
+				chld_fd_cls_fail(px, -1, out, cmd);
+			if (close(out) != 0)
+				chld_fd_cls_fail(px, -1, -1, cmd);
+			execve(cmd[0], cmd, px->envp);
+			chld_fd_cls_fail(px, -1, -1, cmd);
+		}
 	}
-	else
-	{
-		if (out > 0 && close(out) != 0)
-			return (CLOSE_FAILURE);
-	}
+	if (out > 0 && close(out) != 0)
+		return (CLOSE_FAILURE);
 	return (0);
 }

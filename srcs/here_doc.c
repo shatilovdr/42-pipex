@@ -6,16 +6,15 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 22:45:53 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/02 00:13:14 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/02 12:46:18 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 t_bool	read_stdin_write_to_file(int fd, char *limiter);
-void	edit_args(int *argc, char ***argv);
 
-t_bool	ft_heredoc(int *argc, char ***argv)
+t_bool	ft_heredoc(char ***argv)
 {
 	int		fd;
 	char	*limiter;
@@ -29,7 +28,8 @@ t_bool	ft_heredoc(int *argc, char ***argv)
 		free(limiter);
 		return (false);
 	}
-	if (read_stdin_write_to_file(fd, limiter) == false)
+	if (ft_printf("pipe heredoc> ") == -1
+		|| read_stdin_write_to_file(fd, limiter) == false)
 	{
 		close(fd);
 		unlink(".here_doc");
@@ -40,7 +40,6 @@ t_bool	ft_heredoc(int *argc, char ***argv)
 		unlink(".here_doc");
 		return (false);
 	}
-	edit_args(argc, argv);
 	return (true);
 }
 
@@ -58,7 +57,8 @@ t_bool	read_stdin_write_to_file(int fd, char *limiter)
 		}
 		if (ft_strncmp(limiter, curr_str, ft_strlen(limiter)) == 0)
 			break ;
-		if (write(fd, curr_str, ft_strlen(curr_str)) == -1)
+		if (ft_printf("pipe heredoc> ") != -1
+			&& write(fd, curr_str, ft_strlen(curr_str)) == -1)
 		{
 			free(curr_str);
 			free(limiter);
@@ -69,20 +69,4 @@ t_bool	read_stdin_write_to_file(int fd, char *limiter)
 	free(curr_str);
 	free(limiter);
 	return (true);
-}
-
-void	edit_args(int *argc, char ***argv)
-{
-	int	i;
-	int	arg_num;
-
-	arg_num = *argc;
-	i = 3;
-	while (i < arg_num)
-	{
-		(*argv)[i - 1] = (*argv)[i];
-		i++;
-	}
-	(*argv)[1] = ".here_doc";
-	*argc = arg_num - 1;
 }
