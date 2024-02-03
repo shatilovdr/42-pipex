@@ -6,12 +6,12 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:56:32 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 14:10:35 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:28:11 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#ifndef ERRORS_BONUS_H
+# define ERRORS_BONUS_H
 
 /*
 * Error codes for user/programm failures such as:
