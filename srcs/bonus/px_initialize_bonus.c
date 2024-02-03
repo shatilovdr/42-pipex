@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_initialize.c                                    :+:      :+:    :+:   */
+/*   px_initialize_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:25:06 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/31 23:01:44 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:17:39 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 t_bool	paths_initialize(t_px *px, char **envp);
 t_bool	cmds_initialize(t_px *px, int argc, char **argv);
@@ -35,7 +35,7 @@ t_px	*px_initialize(int argc, char **argv, char **envp, t_bool here_doc)
 		free_px(px);
 		return (NULL);
 	}
-	(void)here_doc;
+	px->here_doc = here_doc;
 	return (px);
 }
 

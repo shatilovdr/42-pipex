@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_commands.c                                 :+:      :+:    :+:   */
+/*   execute_commands_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/02 14:47:09 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:54:12 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 int	execute_first(t_px *px, int in_fd, int pipes[2][2]);
 int	execute_middle(t_px *px, int num, int pipes[2][2]);
@@ -135,7 +135,7 @@ int	execute_command(t_px *px, int i, int in, int out)
 		{
 			close(in);
 			close(out);
-			return (child_status);
+			exit (child_status);
 		}
 		if (dup2(in, STDIN_FILENO) != -1 && dup2(out, STDOUT_FILENO) != -1)
 		{

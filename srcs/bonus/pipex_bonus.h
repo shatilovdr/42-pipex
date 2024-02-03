@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:11 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/02 16:55:30 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/03 14:12:38 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # ifndef READ
 #  define READ 0
@@ -34,8 +34,8 @@
 
 # include <string.h>
 # include <sys/wait.h>
-# include "../lib/libft/libft.h"
-# include "errors.h"
+# include "../../lib/libft/libft.h"
+# include "errors_bonus.h"
 
 typedef struct s_px
 {
@@ -61,5 +61,6 @@ int		fork_failure(int fd_read_prev, int fd_read, int fd_write);
 int		pipe_failure(int fd_read_prev);
 void	chld_fd_cls_fail(t_px *px, int in, int out, char **cmd);
 int		find_executable(char **command, char **paths);
+int		cmd_args_parser(char ***cmd);
 
 #endif

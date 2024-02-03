@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_command.c                                      :+:      :+:    :+:   */
+/*   get_command_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:12:04 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/02 17:23:17 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/03 13:54:23 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-int	args_parser(char **cmd);
+#include "pipex_bonus.h"
 
 int	get_command(t_px *px, int i, char ***command)
 {
@@ -28,24 +26,14 @@ int	get_command(t_px *px, int i, char ***command)
 		return (MALLOC_FAILURE);
 	}
 	status = find_executable(&(cmd[0]), px->paths);
+	if (status == 0)
+		status = cmd_args_parser(&cmd);
 	if (status != 0)
 	{
 		ft_free_2d_array(cmd);
-		free_px(px); //can't free it..?
-		return (status);
-	}
-	status = args_parser(cmd);
-	if (status != 0)
-	{
 		free_px(px);
 		return (status);
 	}
 	*command = cmd;
-	return (0);
-}
-
-int	args_parser(char **cmd)
-{
-	(void)cmd;
 	return (0);
 }

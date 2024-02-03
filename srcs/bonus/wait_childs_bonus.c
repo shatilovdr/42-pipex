@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_px.c                                          :+:      :+:    :+:   */
+/*   wait_childs_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 12:04:45 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/01/30 12:26:00 by dshatilo         ###   ########.fr       */
+/*   Created: 2024/01/29 12:20:23 by dshatilo          #+#    #+#             */
+/*   Updated: 2024/02/03 13:54:43 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	free_px(t_px *px)
+int	wait_childs(t_px *px, int num)
 {
-	if (px->paths)
-		ft_free_2d_array(px->paths);
-	if (px->cmds)
-		ft_free_2d_array(px->cmds);
-	if (px->pids)
-		free(px->pids);
-	free(px);
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < num)
+	{
+		waitpid(px->pids[i], &status, 0);
+		i++;
+	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (EXIT_FAILURE);
 }

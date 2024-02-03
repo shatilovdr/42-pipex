@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   edit_args.c                                        :+:      :+:    :+:   */
+/*   check_inputs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 12:44:04 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/02 12:44:08 by dshatilo         ###   ########.fr       */
+/*   Created: 2024/02/01 22:03:37 by dshatilo          #+#    #+#             */
+/*   Updated: 2024/02/03 12:57:33 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	edit_args(int *argc, char ***argv)
-{
-	int	i;
-	int	arg_num;
+#include "pipex.h"
 
-	arg_num = *argc;
-	i = 3;
-	while (i < arg_num)
+t_bool	check_inputs(int argc)
+{
+	if (argc != 5)
 	{
-		(*argv)[i - 1] = (*argv)[i];
-		i++;
+		ft_putendl_fd("INCORRECT NUMBER OF ARGUMENTS!\n"
+			"example: file1 cmd1 cmd2 file2", 2);
+		return (false);
 	}
-	(*argv)[1] = ".here_doc";
-	*argc = arg_num - 1;
+	return (true);
 }
