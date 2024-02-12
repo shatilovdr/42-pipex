@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:02:40 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 13:54:16 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:14:55 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int	find_executable(char **command, char **paths)
 	char	*cmd_in_path;
 
 	cmd_in_path = NULL;
-	if (strchr(*command, '/') != NULL)
-		status = check_path_provided(*command, &cmd_in_path);
-	else
+	if (strchr(*command, '/') == NULL)
 		status = find_cmd_in_path(*command, paths, &cmd_in_path);
+	else
+		status = check_path_provided(*command, &cmd_in_path);
 	if (status == 0)
 	{
-		free(*command);
+		if (strchr(*command, '/') == NULL)
+			free(*command);
 		*command = cmd_in_path;
 	}
 	else if (status == CMD_NF_FAILURE)
