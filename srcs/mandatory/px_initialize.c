@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:25:06 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 12:47:57 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:22:47 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ t_bool	paths_initialize(t_px *px, char **envp)
 		}
 		i++;
 	}
-	if (!path)
-		path = "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin";
-	px->paths = ft_split(path, ':');
+	if (path)
+		px->paths = ft_split(path, ':');
+	else
+		px->paths = (char **)ft_calloc(1, sizeof(char *));
 	if (!px->paths)
 	{
 		ft_putendl_fd("Can't allocate memory for px->paths", 2);

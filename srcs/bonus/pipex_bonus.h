@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:11 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 14:12:38 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:05:34 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		wait_childs(t_px *px, int num);
 int		fork_failure(int fd_read_prev, int fd_read, int fd_write);
 int		pipe_failure(int fd_read_prev);
 void	chld_fd_cls_fail(t_px *px, int in, int out, char **cmd);
+void	chld_execve_fail(t_px *px, char **cmd);
 int		find_executable(char **command, char **paths);
-int		cmd_args_parser(char ***cmd);
 
 #endif

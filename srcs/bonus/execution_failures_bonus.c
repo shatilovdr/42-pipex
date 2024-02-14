@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 21:34:38 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 13:54:15 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:05:23 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ void	chld_fd_cls_fail(t_px *px, int in, int out, char **cmd)
 		ft_free_2d_array(cmd);
 	free_px(px);
 	exit(CLOSE_FAILURE);
+}
+
+void	chld_execve_fail(t_px *px, char **cmd)
+{
+	ft_free_2d_array(cmd);
+	free_px(px);
+	exit(EXECVE_FAILURE);
 }

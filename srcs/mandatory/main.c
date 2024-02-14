@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:17:24 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 12:58:42 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:15:17 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	t_px	*px;
 	int		status;
 
-	if (check_inputs(argc) == false)
+	if (check_inputs(argc, argv) == false)
 		return (ARGS_FAILURE);
 	px = px_initialize(argc, argv, envp);
 	if (!px)

@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 09:56:32 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 12:50:06 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:01:08 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@
 
 # ifndef CMD_NF_FAILURE
 #  define CMD_NF_FAILURE 127
+# endif
+
+# ifndef EXECVE_FAILURE
+#  define EXECVE_FAILURE 127
 # endif
 
 #endif

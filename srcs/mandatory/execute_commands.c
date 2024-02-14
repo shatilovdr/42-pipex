@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:58:49 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 12:57:00 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:01:27 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	execute_command(t_px *px, int i, int in, int out)
 			if (close(out) != 0)
 				chld_fd_cls_fail(px, -1, -1, cmd);
 			execve(cmd[0], cmd, px->envp);
-			chld_fd_cls_fail(px, -1, -1, cmd);
+			chld_execve_fail(px, cmd);
 		}
 	}
 	if (out > 0 && close(out) != 0)

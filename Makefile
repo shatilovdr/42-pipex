@@ -3,14 +3,14 @@ include lib/libft/.make
 NAME			:=	pipex
 
 SRCS_NAME		:=	main.c check_inputs.c px_initialize.c execute_commands.c open_files.c check_access.c get_command.c \
-					find_executable.c cmd_args_parser.c wait_childs.c free_px.c execution_failures.c 
+					find_executable.c wait_childs.c free_px.c execution_failures.c 
 SRCS_PATH		:=	./srcs/mandatory/
 SRCS			:=	$(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS			:= $(SRCS:.c=.o)
 
 BNS_SRCS_NAME	:=	main_bonus.c check_inputs_bonus.c here_doc_bonus.c edit_args_bonus.c px_initialize_bonus.c \
 					execute_commands_bonus.c open_files_bonus.c check_access_bonus.c get_command_bonus.c \
-					find_executable_bonus.c cmd_args_parser_bonus.c wait_childs_bonus.c free_px_bonus.c \
+					find_executable_bonus.c wait_childs_bonus.c free_px_bonus.c \
 					execution_failures_bonus.c 
 BNS_SRCS_PATH	:=	./srcs/bonus/
 BNS_SRCS		:=	$(addprefix $(BNS_SRCS_PATH), $(BNS_SRCS_NAME))

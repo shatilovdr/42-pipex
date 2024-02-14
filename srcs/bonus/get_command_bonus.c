@@ -6,7 +6,7 @@
 /*   By: dshatilo <dshatilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:12:04 by dshatilo          #+#    #+#             */
-/*   Updated: 2024/02/03 13:54:23 by dshatilo         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:29:44 by dshatilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	get_command(t_px *px, int i, char ***command)
 		return (MALLOC_FAILURE);
 	}
 	status = find_executable(&(cmd[0]), px->paths);
-	if (status == 0)
-		status = cmd_args_parser(&cmd);
 	if (status != 0)
 	{
 		ft_free_2d_array(cmd);
