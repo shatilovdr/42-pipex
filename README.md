@@ -105,5 +105,11 @@ Than run executable according to the description above.
 	```
 3) Compile project
 	```sh
-		make 
+		make
 	```
+	or 
+	```sh
+		make bonus
+	```
+	to support bonus part
+
